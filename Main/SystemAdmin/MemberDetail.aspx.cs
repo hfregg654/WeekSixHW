@@ -14,11 +14,12 @@ namespace Main.SystemAdmin
     {
         protected void Page_Init(object sender, EventArgs e)
         {
+
             if (this.IsUpdateMode())
             {
+
                 Guid temp;
                 Guid.TryParse(Request.QueryString["ID"], out temp);
-
                 this.txtAccount.Enabled = false;
                 this.txtAccount.BackColor = System.Drawing.Color.DarkGray;
                 this.LoadAccount(temp);
@@ -55,6 +56,7 @@ namespace Main.SystemAdmin
             this.txtEmail.Text = model.Email;
             this.txtTitle.Text = model.Title;
             this.rdblUserLevel.SelectedValue = model.UserLevel.ToString();
+            this.txtPhone.Text = model.Phone;
         }
 
 
@@ -73,7 +75,8 @@ namespace Main.SystemAdmin
                 if (!Guid.TryParse(qsID, out temp))
                     return;
 
-                manager.GetAccountViewModel(temp);
+
+                model = manager.GetAccountViewModel(temp);
             }
             else
             {
@@ -138,7 +141,7 @@ namespace Main.SystemAdmin
 
 
             if (this.IsUpdateMode())
-                manager.CreateAccountViewModel(model);
+                manager.UpdateAccountViewModel(model);
             else
             {
                 try

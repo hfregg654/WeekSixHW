@@ -193,7 +193,6 @@ namespace CoreProject.Managers
 
         public AccountViewModel GetAccountViewModel(Guid id)
         {
-            string connectionString = "Data Source=localhost\\SQLExpress;Initial Catalog=SampleProject; Integrated Security=true";
             string queryString =
                 $@" SELECT 
                         Accounts.ID,

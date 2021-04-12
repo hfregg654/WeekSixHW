@@ -25,8 +25,12 @@ namespace Main.SystemAdmin
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.LoadGridView();
-            this.RestoreParameters();
+            if (!IsPostBack)
+            {
+                this.LoadGridView();
+                this.RestoreParameters();
+            }
+
         }
 
         private void RestoreParameters()
