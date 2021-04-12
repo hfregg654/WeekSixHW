@@ -38,6 +38,11 @@ namespace Main.SystemAdmin
             string name = Request.QueryString["name"];
             if (!string.IsNullOrEmpty(name))
                 this.txtName.Text = name;
+            string levelText = Request.QueryString["level"];
+
+            if (!string.IsNullOrEmpty(levelText))
+                rdblLevel.SelectedValue = levelText;
+
         }
 
         private string GetQueryString(bool includePage, int? pageIndex)
