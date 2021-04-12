@@ -129,7 +129,7 @@ namespace CoreProject.Managers
 
             string query =
                 $@" 
-                    SELECT TOP {10} * FROM
+                    SELECT TOP {pageSize} * FROM
                     (
                         SELECT 
                             ROW_NUMBER() OVER(ORDER BY Accounts.ID) AS RowNumber,
@@ -143,7 +143,7 @@ namespace CoreProject.Managers
                         ON Accounts.ID = AccountInfos.ID
                         {filterConditions}
                     ) AS TempT
-                    WHERE RowNumber > {pageSize * (1 - 1)}
+                    WHERE RowNumber > {pageSize * (currentPage - 1)}
                     ORDER BY ID
                 ";
 
@@ -185,7 +185,6 @@ namespace CoreProject.Managers
             // 算總數並回傳
             int? totalSize2 = this.GetScale(countQuery, dbParameters) as int?;
             totalSize = (totalSize2.HasValue) ? totalSize2.Value : 0;
-            totalSize = 33;
 
             return list;
         }
