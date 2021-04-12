@@ -24,10 +24,9 @@ namespace CoreProject.Managers
         public void DeleteAccount()
         {
         }
-
+        const string connectionString = "Data Source=localhost\\SQLExpress;Initial Catalog=HWDB1; Integrated Security=true";
         public List<AccountModel> GetAccounts()
         {
-            string connectionString = "Data Source=localhost\\SQLExpress;Initial Catalog=SampleProject; Integrated Security=true";
             string queryString =
                 $@" SELECT * FROM Accounts";
 
@@ -68,7 +67,6 @@ namespace CoreProject.Managers
 
         public AccountModel GetAccount(string name)
         {
-            string connectionString = "Data Source=localhost\\SQLExpress;Initial Catalog=SampleProject; Integrated Security=true";
             string queryString =
                 $@" SELECT * FROM Accounts
                     WHERE Name = @name

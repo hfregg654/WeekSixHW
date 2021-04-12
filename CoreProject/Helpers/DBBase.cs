@@ -10,9 +10,9 @@ namespace CoreProject.Helpers
 {
     public class DBBase
     {
+        const string connectionString = "Data Source=localhost\\SQLExpress;Initial Catalog=HWDB1; Integrated Security=true";
         public DataTable GetDataTable(string dbCommand, List<SqlParameter> parameters)
         {
-            string connectionString = "Data Source=localhost\\SQLExpress;Initial Catalog=SampleProject; Integrated Security=true";
 
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -40,7 +40,6 @@ namespace CoreProject.Helpers
 
         public object GetScale(string dbCommand, List<SqlParameter> parameters)
         {
-            string connectionString = "Data Source=localhost\\SQLExpress;Initial Catalog=SampleProject; Integrated Security=true";
 
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -69,7 +68,6 @@ namespace CoreProject.Helpers
 
         public int ExecuteNonQuery(string dbCommand, List<SqlParameter> parameters)
         {
-            string connectionString = "Data Source=localhost\\SQLExpress;Initial Catalog=SampleProject; Integrated Security=true";
 
 
             using (SqlConnection connection = new SqlConnection(connectionString))
