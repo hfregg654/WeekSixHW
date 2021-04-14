@@ -89,73 +89,80 @@ namespace Main.SystemAdmin
                 if (!string.IsNullOrEmpty(this.txtPWD.Text) &&
                 !string.IsNullOrEmpty(this.txtNewPWD.Text))
                 {
-                    if (model.PWD == this.txtPWD.Text)
+
+                    if (model.PWD == this.txtPWD.Text.Trim())
                     {
-                        model.PWD = this.txtNewPWD.Text.Trim();
+                        if (this.txtPWD.Text.Trim() == this.txtNewPWD.Text.Trim())
+                        {
+                            this.lblMsg.Text = "新密碼和原密碼重複";
+                            return;
+                        }
+                        else
+                            model.PWD = this.txtNewPWD.Text.Trim();
                     }
                     else
                     {
                         this.lblMsg.Text = "密碼和原密碼不一致";
                         return;
                     }
+                    }
                 }
+                else
+                {
+                    if (string.IsNullOrEmpty(this.txtNewPWD.Text))
+                    {
+                        this.lblMsg.Text = "密碼不可以為空";
+                        return;
+                    }
+
+                    if (manager.GetAccount(this.txtAccount.Text.Trim()) != null)
+                    {
+                        this.lblMsg.Text = "帳號已重覆，請選擇其它帳號";
+                        return;
+                    }
+
+                    model.Account = this.txtAccount.Text.Trim();
+                    model.PWD = this.txtNewPWD.Text.Trim();
+                }
+
+                model.Title = this.txtTitle.Text.Trim();
+                model.Name = this.txtName.Text.Trim();
+                model.Email = this.txtEmail.Text.Trim();
+                model.Phone = this.txtPhone.Text.Trim();
+
+                int userLever = 0;
+
+                if (int.TryParse(this.rdblUserLevel.SelectedValue, out userLever))
+                {
+                    try
+                    {
+                        var item = (UserLevel)userLever;
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+
+                    model.UserLevel = userLever;
+                }
+
+
+                if (this.IsUpdateMode())
+                    manager.UpdateAccountViewModel(model);
+                else
+                {
+                    try
+                    {
+                        manager.CreateAccountViewModel(model);
+                    }
+                    catch (Exception ex)
+                    {
+                        this.lblMsg.Text = ex.ToString();
+                        return;
+                    }
+                }
+
+                this.lblMsg.Text = "存檔成功";
             }
-            else
-            {
-                if (string.IsNullOrEmpty(this.txtNewPWD.Text))
-                {
-                    this.lblMsg.Text = "密碼不可以為空";
-                    return;
-                }
-
-                if (manager.GetAccount(this.txtAccount.Text.Trim()) != null)
-                {
-                    this.lblMsg.Text = "帳號已重覆，請選擇其它帳號";
-                    return;
-                }
-
-                model.Account = this.txtAccount.Text.Trim();
-                model.PWD = this.txtNewPWD.Text.Trim();
-            }
-
-            model.Title = this.txtTitle.Text.Trim();
-            model.Name = this.txtName.Text.Trim();
-            model.Email = this.txtEmail.Text.Trim();
-            model.Phone = this.txtPhone.Text.Trim();
-
-            int userLever = 0;
-
-            if (int.TryParse(this.rdblUserLevel.SelectedValue, out userLever))
-            {
-                try
-                {
-                    var item = (UserLevel)userLever;
-                }
-                catch
-                {
-                    throw;
-                }
-
-                model.UserLevel = userLever;
-            }
-
-
-            if (this.IsUpdateMode())
-                manager.UpdateAccountViewModel(model);
-            else
-            {
-                try
-                {
-                    manager.CreateAccountViewModel(model);
-                }
-                catch (Exception ex)
-                {
-                    this.lblMsg.Text = ex.ToString();
-                    return;
-                }
-            }
-
-            this.lblMsg.Text = "存檔成功";
         }
     }
-}
